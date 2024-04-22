@@ -5,7 +5,6 @@ const {v4: uuidv4} = require('uuid')
 const { generateTokens } = require("../utils/jwt")
 const { addRefreshTokenToWhitelist } = require('../utils/auth')
 const { createUser } = require("../services/createUser")
-const { sendMail } = require('../utils/mail')
 
 const router = express.Router()
 
@@ -65,7 +64,6 @@ router.post('/', async (req, res) => {
         const { accessToken, refreshToken } = generateTokens(newUser, jti)
 
         await addRefreshTokenToWhitelist({ jti, refreshToken, userId: newUser.id })
-        await sendMail(newUser.email)
 
         res.status(200).json({message: "User created successfully", token: accessToken, refresh: refreshToken})
 

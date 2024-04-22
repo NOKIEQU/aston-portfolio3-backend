@@ -8,15 +8,6 @@ const jwt = require("jsonwebtoken")
 const login = require('./routes/login')
 const register = require('./routes/register')
 const refreshToken = require('./routes/refreshToken')
-const verifyEmail = require('./routes/verifyEmail')
-
-const createOffer = require('./routes/createOffer')
-const createBoostedOffer = require('./routes/createBoostedOffer')
-const createBoostedMainOffer = require('./routes/createBoostedMainOffer')
-
-const getAllOffers = require('./routes/getAllOffers')
-const getUserOffers = require('./routes/getUsersOffer')
-const getOfferByID = require('./routes/getOfferByID')
 
 const { isAuthenticated, isAdmin } = require('./utils/middlewares')
 const { getUserByID } = require('./services/getUsers')
@@ -36,59 +27,43 @@ app.use(
 app.use('/register', register)
 app.use('/login', login)
 app.use('/refreshToken', refreshToken)
-app.use('/verifyEmail', verifyEmail)
 
-// Cteate new offer on the website
-app.use('/createOffer', isAuthenticated, createOffer)
-app.use('/createBoostedOffer', isAuthenticated, createBoostedOffer)
-app.use('./createBoostedMainOffer', isAuthenticated, createBoostedMainOffer)
 
-// Get the specific offers
-// We do not need any authorisation for this as we want the users to get them on page load
-app.use('/getAllOffers', getAllOffers)
+// app.get('/profile', isAuthenticated, async (req, res) => {
+//     const userId = req.payload.data.id 
 
-// NEED TESTING
+//     const user = await getUserByID(userId)
+//     delete user.password
+//     res.status(200).json({message: "Successfull", user: user})
+// })
 
-// This return offers that are not containing any user private information so we dont need any authorisation for that
-app.use('/getUserOffers', getUserOffers)
+// app.get('/admin', isAdmin, async (req, res) => {
+//   res.status(200).json({message: "Hello Admin"})
+// })
 
-app.use('/getOffer', getOfferByID)
+// app.post('/activate', isAdmin, async (req, res) => {
 
-app.get('/profile', isAuthenticated, async (req, res) => {
-    const userId = req.payload.data.id 
+//   const { id } = req.body
 
-    const user = await getUserByID(userId)
-    delete user.password
-    res.status(200).json({message: "Successfull", user: user})
-})
+//   try {
 
-app.get('/admin', isAdmin, async (req, res) => {
-  res.status(200).json({message: "Hello Admin"})
-})
+//     await db.user.update({
+//       where: {
+//         id: id
+//       },
+//       data: {
+//         activated: true
+//       }
+//     })
 
-app.post('/activate', isAdmin, async (req, res) => {
+//     res.status(200).json({message: "Activated Successfully"})
 
-  const { id } = req.body
+//   } catch (err) {
+//     console.error(err)
+//     res.status(500).json({message: "Internal Server Error"})
+//   }
 
-  try {
-
-    await db.user.update({
-      where: {
-        id: id
-      },
-      data: {
-        activated: true
-      }
-    })
-
-    res.status(200).json({message: "Activated Successfully"})
-
-  } catch (err) {
-    console.error(err)
-    res.status(500).json({message: "Internal Server Error"})
-  }
-
-})
+// })
 
 
 
