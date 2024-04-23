@@ -8,6 +8,7 @@ const jwt = require("jsonwebtoken")
 const login = require('./routes/login')
 const register = require('./routes/register')
 const refreshToken = require('./routes/refreshToken')
+const getProjects = require('./routes/getProjects')
 
 const { isAuthenticated, isAdmin } = require('./utils/middlewares')
 const { getUserByID } = require('./services/getUsers')
@@ -27,6 +28,7 @@ app.use(
 app.use('/register', register)
 app.use('/login', login)
 app.use('/refreshToken', refreshToken)
+app.use('/projects', getProjects)
 
 
 // app.get('/profile', isAuthenticated, async (req, res) => {

@@ -3,6 +3,9 @@ const { hashToken } = require('./hash')
 
 // used when we create a refresh token.
 function addRefreshTokenToWhitelist({ jti, refreshToken, userId }) {
+
+    
+
     return db.refreshToken.create({
       data: {
         id: jti,

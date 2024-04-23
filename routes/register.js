@@ -63,7 +63,7 @@ router.post('/', async (req, res) => {
         const jti = uuidv4();
         const { accessToken, refreshToken } = generateTokens(newUser, jti)
 
-        await addRefreshTokenToWhitelist({ jti, refreshToken, userId: newUser.id })
+        await addRefreshTokenToWhitelist({ jti, refreshToken, userId: newUser.uid })
 
         res.status(200).json({message: "User created successfully", token: accessToken, refresh: refreshToken})
 

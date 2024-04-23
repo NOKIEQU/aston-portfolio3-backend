@@ -33,7 +33,7 @@ router.post('/', async (req, res) => {
 
         const jti = uuidv4();
         const { accessToken, refreshToken } = generateTokens(existingUser, jti);
-        await addRefreshTokenToWhitelist({ jti, refreshToken, userId: existingUser.id })
+        await addRefreshTokenToWhitelist({ jti, refreshToken, userId: existingUser.uid })
         delete existingUser.password
         res.status(200).json({message: "Successfull", token: accessToken, refresh: refreshToken, user: existingUser})
 
