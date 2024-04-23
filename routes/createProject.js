@@ -1,15 +1,14 @@
 
 const express = require('express')
 const router = express.Router()
-const { editProject, getProjectID } = require('../services/getProjects')
-const { getUserByID } = require('../services/getUsers')
+const { createProject } = require('../services/getProjects')
 
 
 router.post('/', async (req, res) => {
     try {
-        const { pid, title, startDate, endDate, description, phase, uid } = req.body
+        const { title, startDate, endDate, description, phase, uid } = req.body
 
-        if (!pid || !title || !startDate || !endDate || !description || !phase) {
+        if (!title || !startDate || !endDate || !description || !phase || !uid) {
             res.status(400).json({ message: "Missing values" });
             return
         }
@@ -19,15 +18,8 @@ router.post('/', async (req, res) => {
             return
         }
 
-        const user = await getUserByID(uid)
-        const oldProject = await getProjectID(pid)
 
-        if (user.uid !== oldProject.userId) {
-            res.status(500).json({ message: "You are not the owner" })
-            return
-        }
-
-        const newProject = await editProject(pid, title, startDate, endDate, description, phase)
+        const newProject = await createProject(title, startDate, endDate, description, phase, uid)
 
         res.status(200).json({ message: "Successfull", newProject })
 

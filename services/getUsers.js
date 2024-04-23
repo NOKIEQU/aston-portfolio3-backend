@@ -5,7 +5,7 @@ async function getUserByID (id) {
     try {
         return db.user.findFirst({
             where: {
-              id
+              uid: id
             },
             
           })
