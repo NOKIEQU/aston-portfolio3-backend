@@ -40,44 +40,6 @@ app.use('/search', searchProject)
 app.use('/create', isAuthenticated, createProject)
 app.use('/getuser', getUserInfo)
 
-// app.get('/profile', isAuthenticated, async (req, res) => {
-//     const userId = req.payload.data.id 
-
-//     const user = await getUserByID(userId)
-//     delete user.password
-//     res.status(200).json({message: "Successfull", user: user})
-// })
-
-// app.get('/admin', isAdmin, async (req, res) => {
-//   res.status(200).json({message: "Hello Admin"})
-// })
-
-// app.post('/activate', isAdmin, async (req, res) => {
-
-//   const { id } = req.body
-
-//   try {
-
-//     await db.user.update({
-//       where: {
-//         id: id
-//       },
-//       data: {
-//         activated: true
-//       }
-//     })
-
-//     res.status(200).json({message: "Activated Successfully"})
-
-//   } catch (err) {
-//     console.error(err)
-//     res.status(500).json({message: "Internal Server Error"})
-//   }
-
-// })
-
-
-
 app.listen(port, () =>
   console.log(`
 🚀 Server ready at: http://localhost:${port}
